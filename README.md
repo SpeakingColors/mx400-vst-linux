@@ -5,7 +5,7 @@
 Controller plugin for the MX400 on Linux.
 
 ## Status
-Early work in progress. Free and open source. Donations welcome (link coming).
+Early work in progress. Free and open source. Donations welcome: https://ko-fi.com/studio87
 
 ## Docs
 - [MIDI implementation](docs/MIDI-IMPLEMENTATION.md)
