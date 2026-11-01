@@ -48,8 +48,11 @@ jobs:
       - name: Build
         run: |
           ver="${TAGIN:-$GITHUB_REF_NAME}"; ver="${ver#v}"; if echo "$ver" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then sed -i.bak -E "s/^(project\([A-Za-z0-9_]+ VERSION )[0-9.]+/\1$ver/" CMakeLists.txt; rm -f CMakeLists.txt.bak; fi
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DMX400_BUILD_PLUGIN_TEST=OFF
-          cmake --build build --config Release --parallel 4
+          set -o pipefail
+          (cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DMX400_BUILD_PLUGIN_TEST=OFF && cmake --build build --config Release --parallel 4) 2>&1 | tee build.log
+      - name: Show errors
+        if: failure()
+        run: (grep -E "error|Error|fatal" build.log | head -n 8; tail -n 4 build.log) | while IFS= read -r l; do echo "::error::${l:0:300}"; done
       - name: Stage files
         run: |
           mkdir -p stage/vst3
