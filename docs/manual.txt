@@ -1,0 +1,27 @@
+# Intro
+MX400 Controller is a free, open source plugin that sends MIDI to a Lexicon MX400 hardware effects unit, so you can control the unit from inside your DAW or as a standalone app. It does not process audio: your sound goes through the hardware, the plugin only sends control messages. It collects nothing and has no network code.
+Not affiliated with or endorsed by the maker of the MX400. The name is used for compatibility only.
+Version 0.1 is an early build. Everything marked "official only" comes from the printed MX400 manual and has not been tested on a real unit yet.
+
+# Quick start
+1. Connect the MX400 to your computer with a MIDI interface or its USB port.
+2. Open the plugin. In Settings, pick the MIDI output that goes to the MX400.
+3. On the unit set System > MIDI Channel A (and B for Dual Stereo) and match them in the plugin. Check that MIDI CC Receive and MIDI Program Receive are on.
+4. Pick the configuration at the top (Stereo, Dual Stereo or Surround) to match the unit.
+5. Turn a knob. The plugin sends the matching CC. Use the program boxes for program changes (bank select is sent first).
+Alternative: choose "Host MIDI out" and route the plugin's MIDI output to the MX400 in your DAW.
+
+# Safety
+Nothing is sent when a project opens. The unit cannot be read back, so the knobs show what the plugin last sent, not what the unit holds. SEND ALL sends only the controls you have touched. "Recall on load" (off by default) does the same when a project opens. Manual mode sends only when you press SEND ALL. Fast knob sweeps are thinned out so the unit is never flooded; after a program change the plugin waits before sending more.
+
+# Recommendations
+- Set the unit to the same configuration as the plugin before you start.
+- Use the Normal send rate; switch to Slow if the unit misses messages.
+- Use Manual mode while you set up a live project.
+- Store your own favourite programs on the unit itself; the plugin keeps notes and favourites for the 99 programs.
+
+# Limits in this version
+- Effect type and routing values are sent as raw numbers 0 to 127, because the manual does not print the value lists. Bypass on and off use 127 and 0 as a convention (to be verified).
+- The graphs are illustrations, not calibrated to the unit.
+- Not built yet: surround channel trims, return ducker, direct I/O, latency ping, program store, backup and restore through SysEx. The SysEx format of MX-Edit is not documented, so the plugin only captures and stores SysEx files and checks them; it never builds or sends MX400 SysEx.
+- Standalone app is built for Windows and macOS; on Linux use the plugin.

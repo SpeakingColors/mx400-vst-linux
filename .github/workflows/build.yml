@@ -1,0 +1,29 @@
+# Fast checks on every push: protocol core tests (no JUCE) and the processor test (needs JUCE, runs offline).
+name: build
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  core:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Core checks (no JUCE)
+        run: sh tests/run.sh
+  plugin:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and run the processor test
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev libx11-dev libxinerama-dev libxext-dev libxrandr-dev libxcursor-dev libxcomposite-dev libfreetype-dev libfontconfig1-dev libgl1-mesa-dev xvfb ninja-build
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --parallel 4 --target MX400PluginTest MX400Controller_VST3
+          f=$(find build -name MX400PluginTest -type f | head -1); echo "Running $f"
+          HOME=$RUNNER_TEMP xvfb-run -a "$f"

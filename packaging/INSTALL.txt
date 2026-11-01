@@ -1,0 +1,48 @@
+MX400 Controller install, remove and use (works fully offline)
+==============================================================
+
+What it is: a MIDI controller plugin for the Lexicon MX400 hardware unit. It sends MIDI (CC, program change)
+to the MX400. It does not process audio and it collects nothing. Not affiliated with the maker of the MX400.
+
+Windows
+  Run windows\MX400Controller-Setup.exe. It installs two things: the VST3 plugin for your DAW
+  (C:\Program Files\Common Files\VST3, fixed location, all users) and the standalone app plus manual
+  (C:\Program Files\Studio 87\MX400, the folder the installer asks about).
+  Windows may show a blue "unknown publisher" screen because the installer is not signed:
+  click "More info", then "Run anyway".
+  Remove: Settings > Apps > MX400 Controller > Uninstall. It asks if you also want your saved data deleted
+  (default is No, so it stays).
+
+macOS
+  Open macos\MX400Controller-macOS.pkg. It installs the VST3 plugin, the standalone app, the manual and
+  "Uninstall MX400 Controller".
+  The installer is not notarized: if macOS blocks it, open System Settings > Privacy & Security and choose "Open Anyway".
+  Remove: open "Uninstall MX400 Controller" in the Applications folder. It asks if you also want your saved
+  data deleted (default is Keep).
+
+Linux, DAW installed as a Flatpak (for example Bitwig, Reaper or Ardour from Flathub)
+  1. Your DAW should use the org.freedesktop.Platform 25.08 runtime (check with: flatpak info <DAW id>, Runtime line).
+  2. Install the file from the linux folder:
+       flatpak install --user linux/MX400Controller-flatpak-25.08.flatpak
+  3. Restart the DAW and rescan plugins.
+  Remove: flatpak uninstall --user org.freedesktop.LinuxAudio.Plugins.MX400Controller
+
+Linux, DAW installed natively
+  Extract linux/MX400Controller-linux-vst3.tar.gz into ~/.vst3  (create the folder if needed), then rescan plugins.
+  Remove: delete the "MX400 Controller.vst3" folder from ~/.vst3.
+  A standalone app is not in the Linux zip yet; use the plugin inside your DAW.
+
+Connecting the MX400
+  Use a MIDI interface or the USB port of the MX400, and pick it in Settings > Output to MX400.
+  Or choose "Host MIDI out" and route the plugin's MIDI output to the unit in your DAW.
+  Set the plugin's MIDI channels to match the unit (System > MIDI Channel A and B).
+  Nothing is sent when you open a project. Press SEND ALL, or use manual mode.
+
+Your saved data (kept on remove unless you choose to delete it)
+  Windows : %APPDATA%\Studio 87\MX400
+  macOS   : ~/Library/Application Support/Studio 87/MX400
+  Linux   : ~/.config/Studio 87/MX400  (a Flatpak DAW keeps its own copy under ~/.var/app/<DAW id>/config/)
+  This holds SysEx captures. To delete it yourself, remove the Studio 87/MX400 folder at that place.
+
+Manual: MX400Controller-manual.pdf. Checksums: SHA256SUMS.
+Licence: AGPL-3.0-or-later (see LICENSE). Free to use, copy and change.

@@ -2,4 +2,6 @@ build/
 *.o
 *.so
 *.log
+*.pyc
+__pycache__/
 .DS_Store

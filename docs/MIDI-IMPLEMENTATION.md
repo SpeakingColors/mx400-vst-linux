@@ -1,19 +1,21 @@
 # Lexicon MX400: MIDI implementation
 
+Status of every entry: **official only** (read from the manual, not yet verified on hardware).
+
 Source: MX400 User Guide (Lexicon part 18-0446-A, 2006), pp. 33-34 (MIDI system menus), p. 45 (MIDI Implementation Chart) and pp. 46-49 (MIDI CC maps). The CC maps are images in the PDF; they were read by eye from rendered pages. Marked **(check)** where the print is ambiguous.
 
 ## Basics (chart, p. 45)
 
 | Item | Value |
 |---|---|
-| Receive only | Nothing is transmitted (DIN MIDI IN and THRU, plus USB) |
+| Transmitted | Only System Exclusive (chart marks it Yes). Notes, CC, program change, clock and the rest are not transmitted, so the unit cannot be read back over CC |
 | Basic channel | Default 1; set 1 to 16, Omni or Off. Two receive channels: A and B |
 | Channel B | Only used in Dual Stereo (controls the bottom program, Effects 3 and 4) |
 | Mode | Mode 2 (Omni on, mono) |
 | Control change | 1 to 127, see maps below |
 | Program change | 0 to 98 = programs 1 to 99 |
 | Bank select | CC 32: 0 = Factory, 1 = User (chart lists CC 32 only) |
-| System exclusive | Yes, Lexicon editor only. SysEx follows the MIDI channel; if the channel is Off, it is received on all channels |
+| System exclusive | Transmitted and recognized (Yes), Lexicon editor only. SysEx follows the MIDI channel; if the channel is Off, it is received on all channels |
 | MIDI clock | Received, sets delay tempo (needs System > MIDI Clock Sync On; front Tempo button is then disabled) |
 | Notes, velocity, aftertouch, pitch bend, song position/select, start/stop | Not recognized |
 
@@ -36,7 +38,7 @@ Each printed CC cell is "A/B": the first CC drives Effect 1, the second Effect 2
 | Routing | 28 | 28 |
 | Assign A, B, C (knob assigns) | 26/29, 27/30, 28/31 | 29/55, 30/56, 31/57 |
 
-Note: in the Dual Stereo map the printed CCs 26, 27, 28 appear both as Mix/Routing and as Assign A/B/C; Korg-style overlap is not explained in the manual **(check on hardware)**.
+Note: in the Dual Stereo map the printed CCs 26, 27, 28 appear both as Mix/Routing and as Assign A/B/C; the manual does not explain this overlap **(check on hardware)**.
 
 ### Dual Stereo effects (p. 46): parameter CCs 14/21, 15/22, 16/23, 17/24
 
@@ -129,4 +131,6 @@ Tremolo/Panner, Vibrato, DeEsser: none on this page.
 
 1. CC value ranges and enum encodings (Effect Type list, Routing 1 to 5, Delay Type, Waveform, Bypass on/off thresholds) are not printed.
 2. The overlap of CCs 26 to 28 in the Dual Stereo map, and the Pong Delay / Tap Ratio row.
-3. SysEx format for MX-Edit (USB two-way untested; capture planned).
+3. SysEx format for MX-Edit is not documented. The plugin never builds or sends MX400 SysEx; it only captures and stores dumps. See [CAPTURE-GUIDE.md](CAPTURE-GUIDE.md).
+4. Quiet time after a program change and the safe message rate are guesses (the plugin uses 120 ms and 5 ms by default); verify on hardware.
+5. Which CC the unit really uses on the printed overlap (26 to 28 in the Dual Stereo map) is unknown until tested.
