@@ -46,6 +46,7 @@ inline const std::vector<Info>& table()
         {
             const std::string L = pr == 0 ? "a" : "b", N = pr == 0 ? "Program A " : "Program B ";
             Info r; r.id = L + "_routing"; r.name = N + "Routing (raw)"; r.key = "routing"; r.program = pr; v.push_back(r);
+            Info gb; gb.id = L + "_gbypass"; gb.name = N + "Bypass (whole program)"; gb.key = "globalBypass"; gb.program = pr; gb.kind = Kind::Toggle; v.push_back(gb);
             Info bk; bk.id = L + "_bank"; bk.name = N + "Bank (0 Factory, 1 User)"; bk.key = "bank"; bk.program = pr; bk.kind = Kind::Program; v.push_back(bk);
             Info pg; pg.id = L + "_prog"; pg.name = N + "Program"; pg.key = "prog"; pg.program = pr; pg.kind = Kind::Program; pg.def = 1; v.push_back(pg);
         }

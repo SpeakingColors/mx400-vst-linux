@@ -6,7 +6,7 @@ Version 0.1 is an early build. Everything marked "official only" comes from the 
 # Quick start
 1. Connect the MX400 to your computer with a MIDI interface or its USB port.
 2. Open the plugin. In Settings, pick the MIDI output that goes to the MX400.
-3. On the unit set System > MIDI Channel A (and B for Dual Stereo) and match them in the plugin. Check that MIDI CC Receive and MIDI Program Receive are on.
+3. On the unit set System > MIDI Channel A (and B for Dual Stereo) to a number from 1 to 16 and match it in the plugin (the plugin cannot send on All). Check that MIDI CC Receive and MIDI Program Receive are on. Bypass Select on the unit decides what bypass does (Dry, Mute, Input Dry, Input Mute).
 4. Pick the configuration at the top (Stereo, Dual Stereo or Surround) to match the unit.
 5. Turn a knob. The plugin sends the matching CC. Use the program boxes for program changes (bank select is sent first).
 Alternative: choose "Host MIDI out" and route the plugin's MIDI output to the MX400 in your DAW.

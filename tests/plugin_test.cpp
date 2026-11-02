@@ -67,6 +67,13 @@ int main()
         CHECK (e.size() == 1 && e[0].d1 == 13 && e[0].d2 == 127);
         setP (*p, "e1_bypass", 0); e = drain (*p);
         CHECK (e.size() == 1 && e[0].d1 == 13 && e[0].d2 == 0);
+        setP (*p, "a_gbypass", 1); e = drain (*p);
+        CHECK (e.size() == 1 && e[0].ch == 1 && e[0].d1 == 120 && e[0].d2 == 127);   // program bypass, program A
+        setP (*p, "b_gbypass", 1); e = drain (*p);
+        CHECK (e.size() == 1 && e[0].ch == 2 && e[0].d1 == 120 && e[0].d2 == 127);   // program B on channel B
+        setP (*p, "b_gbypass", 0); e = drain (*p);
+        CHECK (e.size() == 1 && e[0].ch == 2 && e[0].d1 == 120 && e[0].d2 == 0);
+        setP (*p, "a_gbypass", 0); e = drain (*p);
         setP (*p, "a_routing", 3); e = drain (*p);
         CHECK (e.size() == 1 && e[0].ch == 1 && e[0].d1 == 28 && e[0].d2 == 3);
         setP (*p, "e1_x3", 9);    e = drain (*p);

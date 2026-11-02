@@ -19,6 +19,8 @@ enum class Config { Stereo = 0, DualStereo = 1, Surround = 2 };
 enum class MapKind { DualStereo, Stereo, Surround };
 
 constexpr int kNone = -1;
+// Printed under every CC map (pp. 46 to 49): "Program (Global) Bypass", MIDI CC 120. Same CC in every map.
+constexpr int kProgramBypassCc = 120;
 
 // One column of a map: a parameter slot shared by every effect row.
 // cc[0] drives the first effect (Effect 1, or 3 on channel B), cc[1] the second (2, or 4).

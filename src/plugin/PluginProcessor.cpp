@@ -145,6 +145,7 @@ int Mx400Processor::ccFor (int pi, int& ch) const
         if (c != Config::DualStereo) return -1;        // program B exists only in Dual Stereo
         ch = chB.load() - 1;
     }
+    if (p.key == "globalBypass") return kProgramBypassCc;   // whole program, same CC in every map
     if (c == Config::Surround && effect > 1) return -1;
     if (c == Config::Stereo && effect > 2) return -1;
 

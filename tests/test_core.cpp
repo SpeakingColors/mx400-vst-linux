@@ -60,6 +60,14 @@ int main()
     CHECK(&mapFor(Config::DualStereo, 5) == &stereoMap());
     CHECK(&mapFor(Config::Surround) == &surroundMap());
 
+    // CC 120 (program bypass) must not collide with any mapped CC
+    CHECK(kProgramBypassCc == 120);
+    for (const Map* m : { &ds, &st, &su })
+    {
+        for (const auto& c : m->columns) for (int v : c.cc) CHECK(v != kProgramBypassCc);
+        for (const auto& f : m->fixed)   for (int v : f.cc) CHECK(v != kProgramBypassCc);
+    }
+
     // every CC is a legal 7 bit number, every row has one cell per column
     for (const Map* m : { &ds, &st, &su })
     {

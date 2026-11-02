@@ -23,6 +23,14 @@ System menu switches that gate MIDI: MIDI Channel A, MIDI Channel B, MIDI Clock 
 
 Programs: 99 Factory + 99 User per configuration (Surround, Stereo, Dual Stereo). Files from MX-Edit: `.mx400dsp` (dual stereo), `.mx400stp` (stereo), `.mx400srp` (surround); backup `.m2a` on Windows, `.syx` on Mac. The editor/librarian uses USB or MIDI.
 
+### Unit settings that change how MIDI behaves (System menu, set on the unit, not by MIDI)
+
+- MIDI Channel A and B: 1 to 16, All or Off. The plugin always sends on a concrete channel, so set the unit to the same number.
+- MIDI Clock Sync (On or Off), MIDI Program Receive, MIDI CC Receive: must be On for the plugin to have any effect.
+- Bypass Select: Dry, Mute, Input Dry, Input Mute. This decides what a bypass message (CC 13, 20, 40 and 120) actually does to the audio.
+- Tempo Display: ms or BPM, display only.
+- Not controllable by MIDI according to the manual: input source, clock source, analog and digital output modes, output level.
+
 ## CC map: how to read it
 
 Each printed CC cell is "A/B": the first CC drives Effect 1, the second Effect 2 (in Dual Stereo: Effects 1 and 2 are Program A on channel A; Effects 3 and 4 are Program B on channel B). The first four parameter columns are the same row for every effect type; their meaning changes with the effect loaded. Every value is 0 to 127 (range not printed).
@@ -35,6 +43,7 @@ Each printed CC cell is "A/B": the first CC drives Effect 1, the second Effect 2
 | Bypass | 13 / 20 | 13 / 40 |
 | Tempo (delay effects) | 18 / 25 | 26 / 53 |
 | Effect Type | 12 / 19 | 12 / 39 |
+| Program (Global) Bypass | 120 | 120 |
 | Routing | 28 | 28 |
 | Assign A, B, C (knob assigns) | 26/29, 27/30, 28/31 | 29/55, 30/56, 31/57 |
 

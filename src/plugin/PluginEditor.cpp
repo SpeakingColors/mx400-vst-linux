@@ -226,7 +226,7 @@ public:
             rebuild();
         };
         bypass.setButtonText ("Bypass");
-        bypass.setTooltip ("Bypass this effect. The manual does not print the on/off values: the plugin sends 127 for on and 0 for off (usual MIDI convention), verify on the unit.");
+        bypass.setTooltip ("Bypass this effect. What it does depends on the unit's System > Bypass Select (Dry, Mute, Input Dry or Input Mute). The manual does not print the on/off values: the plugin sends 127 for on and 0 for off (usual MIDI convention), verify on the unit.");
         for (int i = 0; i < 12; ++i) { main.push_back (std::make_unique<KnobCell> (p)); addAndMakeVisible (*main.back()); }
         for (int i = 0; i < 5; ++i)  { adv.push_back (std::make_unique<KnobCell> (p)); addAndMakeVisible (*adv.back()); }
         fxBox.setTooltip ("Which effect the unit has loaded here. The MX400 cannot report it back, so pick the same one: it only changes the knob names and the CC map used. It does not change the unit.");
@@ -340,6 +340,9 @@ public:
             onChanged();
         };
         addAndMakeVisible (mixA); addAndMakeVisible (mixB); addAndMakeVisible (routeRaw);
+        addAndMakeVisible (progBypass);
+        progBypass.setButtonText ("Program bypass");
+        progBypass.setTooltip ("Bypass the whole program (MIDI CC 120). What it does depends on the unit's System > Bypass Select (Dry, Mute, Input Dry or Input Mute). The manual does not print the on/off values: the plugin sends 127 for on and 0 for off (usual MIDI convention), verify on the unit.");
     }
     int current = 0;                                   // program being edited (Dual Stereo)
     void rebuild()
@@ -368,6 +371,9 @@ public:
         }
         routeRaw.bind ("Routing (raw)", current == 0 ? "a_routing" : "b_routing",
                        "Routing, MIDI CC 28, raw value. The manual does not print which value is which routing.");
+        progBypassAtt.reset();
+        if (auto* prm = proc.apvts.getParameter (current == 0 ? "a_gbypass" : "b_gbypass"))
+            progBypassAtt = std::make_unique<ButtonParameterAttachment> (*prm, progBypass, nullptr);
         resized(); repaint();
     }
     void resized() override
@@ -382,6 +388,8 @@ public:
         mixA.setBounds (k.removeFromLeft (k.getWidth() / 2)); mixB.setBounds (k);
         r.removeFromTop (10);
         routeRaw.setBounds (r.removeFromTop (95).withSizeKeepingCentre (110, 95));
+        r.removeFromTop (6);
+        progBypass.setBounds (r.removeFromTop (28));
     }
     void paint (Graphics& g) override
     {
@@ -410,6 +418,8 @@ public:
 private:
     Mx400Processor& proc; std::function<void()> onChanged;
     KnobCell mixA, mixB, routeRaw;
+    ToggleButton progBypass;
+    std::unique_ptr<ButtonParameterAttachment> progBypassAtt;
     Rectangle<int> diagram;
     bool updating = false;
 };
