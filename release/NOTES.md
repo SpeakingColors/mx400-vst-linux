@@ -1,4 +1,4 @@
-**MX400 Controller v0.1 (test build, early)**
+**MX400 Controller v0.1.1 (test build, early)**
 
 A free, open source MIDI controller plugin for the Lexicon MX400 hardware unit. It sends CC and program change; it does not process audio. It collects nothing and works offline.
 
@@ -10,4 +10,4 @@ One zip: installers for Windows (.exe), macOS (.pkg), Linux (Flatpak extension a
 - Nothing is sent when a project opens. Use SEND ALL.
 - Not built yet: surround trims, ducker, direct I/O, SysEx store and restore (the MX-Edit SysEx format is undocumented). SysEx can be captured and checked only.
 - Installers are unsigned and not yet tested on real machines.
-- New in this build: program bypass (CC 120).
+- New since v0.1.0: program bypass (CC 120), install notes and macOS install guide, System menu notes in the manual.

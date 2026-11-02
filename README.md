@@ -16,7 +16,7 @@ Version 0.1, early. Built and checked by tests (237 protocol checks, 33 processo
 See [Releases](../../releases). One zip per release: Windows and macOS installers, Linux Flatpak and .vst3, PDF manual.
 
 ## Install notes
-- **Windows:** the installer is not signed yet, so SmartScreen may show "Windows protected your PC": click More info, then Run anyway. See the [code signing policy](docs/code-signing-policy.md).
+- **Windows:** the installer is not signed yet, so SmartScreen may show "Windows protected your PC": click More info, then Run anyway. See the [code signing notes](docs/code-signing-policy.md).
 - **macOS:** not signed or notarized by Apple (their program costs money; this project is free). macOS warns the first time; the easy fix is in [macOS install](docs/macos-install.md).
 - **Linux:** Flatpak extension for Flatpak DAWs, or copy the .vst3 to `~/.vst3`. Details in INSTALL.txt inside the zip.
 
@@ -33,7 +33,7 @@ See [Releases](../../releases). One zip per release: Windows and macOS installer
 - [MIDI implementation](docs/MIDI-IMPLEMENTATION.md)
 - [SysEx capture guide](docs/CAPTURE-GUIDE.md)
 - [macOS install](docs/macos-install.md)
-- [Code signing policy](docs/code-signing-policy.md)
+- [Code signing notes](docs/code-signing-policy.md)
 - [Interactive mockups](docs/README.md)
 - [Roadmap](ROADMAP.md)
 

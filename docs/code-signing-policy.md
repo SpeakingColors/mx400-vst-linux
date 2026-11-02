@@ -1,22 +1,13 @@
-# Code signing policy
+# Code signing
 
-Free code signing provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+The MX400 Controller installers are **not code signed**. We do not pay for certificates and we are not using a free signing service for now.
 
-This applies to the Windows installer (`MX400Controller-Setup.exe`) once SignPath Foundation has approved the project. Until then the installer is not signed and Windows may show an "unknown publisher" screen (More info, then Run anyway).
+What you will see:
+- **Windows:** SmartScreen may show "Windows protected your PC". Click More info, then Run anyway.
+- **macOS:** a warning the first time you open the installer. See [macos-install.md](macos-install.md).
+- **Linux:** no such step.
 
-## What gets signed
-- Only binaries built by this project's GitHub Actions workflow (`.github/workflows/release.yml`) from the source in this repository.
-- Nothing built on a personal computer is ever signed.
-- Upstream libraries (JUCE and others) are not re-signed.
-
-## Team roles
-MX400 Controller is a one person project, so all three roles are held by the repository owner:
-- Author: [SpeakingColors](https://github.com/SpeakingColors)
-- Reviewer: [SpeakingColors](https://github.com/SpeakingColors)
-- Approver (approves every signing request by hand): [SpeakingColors](https://github.com/SpeakingColors)
-
-## Privacy
-MX400 Controller does not send any information to other networked systems. It makes no network connections of its own; the only link (Ko-fi, in the About dialog) opens in your browser when you click it.
-
-## Verifying a download
-Every release lists SHA-256 checksums (`SHA256SUMS.txt`, and `SHA256SUMS` inside the zip).
+## How to check a download yourself
+- The full source code is public and the installers are built by public GitHub Actions from it.
+- Every release has `SHA256SUMS` inside the zip. Check your files against it (`sha256sum -c SHA256SUMS` on Linux, `shasum -a 256 -c SHA256SUMS` on macOS).
+- The plugin makes no network connections and collects nothing.
