@@ -10,3 +10,4 @@ One zip: installers for Windows (.exe), macOS (.pkg), Linux (Flatpak extension a
 - Nothing is sent when a project opens. Use SEND ALL.
 - Not built yet: surround trims, ducker, direct I/O, SysEx store and restore (the MX-Edit SysEx format is undocumented). SysEx can be captured and checked only.
 - Installers are unsigned and not yet tested on real machines.
+- This release has no macOS installer (the macOS build job did not complete). It will be added in a later run.
