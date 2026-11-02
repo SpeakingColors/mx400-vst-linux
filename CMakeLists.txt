@@ -6,7 +6,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Core checks (no JUCE, no hardware): ctest, or sh tests/run.sh
 enable_testing()
 add_executable(mx400_test_core tests/test_core.cpp)
-target_compile_options(mx400_test_core PRIVATE -Wall -Wextra)
+if(MSVC)
+  target_compile_options(mx400_test_core PRIVATE /W4)
+else()
+  target_compile_options(mx400_test_core PRIVATE -Wall -Wextra)
+endif()
 add_test(NAME core COMMAND mx400_test_core)
 
 # Plugin. Pass -DMX400_JUCE_DIR=/path/to/JUCE and -DFETCHCONTENT_SOURCE_DIR_CAT_UI=/path/to/cat-ui for local sources.
