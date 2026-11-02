@@ -17,6 +17,7 @@ macOS
   Open macos\MX400Controller-macOS.pkg. It installs the VST3 plugin, the standalone app, the manual and
   "Uninstall MX400 Controller".
   The installer is not notarized: if macOS blocks it, open System Settings > Privacy & Security and choose "Open Anyway".
+  Easiest way without the warning: download the zip with Terminal instead of the browser (see docs/macos-install.md in the repo).
   Remove: open "Uninstall MX400 Controller" in the Applications folder. It asks if you also want your saved
   data deleted (default is Keep).
 
