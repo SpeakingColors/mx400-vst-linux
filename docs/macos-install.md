@@ -16,8 +16,8 @@ Each release also has `MX400Controller-v<version>.zip` with the installers for a
 Your browser marks every download as "from the internet", and that mark triggers the block. The `curl` command in Terminal does not add the mark. This worked on a Mac for another Studio 87 tool (JPurrr-8000); it is not yet tested on this one.
 1. Open Terminal (Applications, Utilities).
 2. Run this (change the version in the address if there is a newer one on the release page):
-   `curl -L -o ~/Downloads/MX400Controller.zip https://github.com/SpeakingColors/mx400-vst-linux/releases/download/v0.1.1/MX400Controller-v0.1.1.zip`
-3. Run `cd ~/Downloads && unzip -o MX400Controller.zip` and then `open MX400Controller-v0.1.1/macos/MX400Controller-macOS.pkg`. The installer opens.
+   `curl -L -o ~/Downloads/MX400Controller.zip https://github.com/SpeakingColors/mx400-vst-linux/releases/download/v0.1.2/MX400Controller-v0.1.2.zip`
+3. Run `cd ~/Downloads && unzip -o MX400Controller.zip` and then `open MX400Controller-v0.1.2/macos/MX400Controller-macOS.pkg`. The installer opens.
 
 **Method 2, in System Settings (if you downloaded with the browser)**
 1. Double click the .pkg. macOS blocks it. Close the message.

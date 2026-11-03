@@ -56,8 +56,11 @@ jobs:
       - name: Stage files
         run: |
           mkdir -p stage/vst3
-          v=$(find build -type d -name "*.vst3" | head -1); echo "VST3: $v"
+          c=$(find build -type d -name Contents -path "*.vst3/Contents" | head -1); v=$(dirname "$c"); echo "VST3: $v"
           cp -r "$v"/. "stage/vst3/"
+          n=$(find stage/vst3 -type f -name "*.vst3" | wc -l)
+          echo "::notice::VST3 binaries staged: $n; files: $(cd stage/vst3 && find . -type f | tr '\n' ' ' | head -c 400)"
+          [ "$n" -ge 1 ] || { echo "::error::no VST3 binary staged from $v"; exit 1; }
           exe=$(find build -name "*.exe" -path "*Standalone*" | head -1); echo "EXE: $exe"
           cp "$exe" "stage/$PRODUCT.exe"
           cp manual/*.pdf "stage/$NAME-manual.pdf"
