@@ -1,5 +1,7 @@
 # MX400 VST for Linux 🐈
 
+<p align="center"><a href="https://ko-fi.com/studio87"><img src="https://raw.githubusercontent.com/SpeakingColors/.github/main/assets/kofi-banner.svg" alt="Support Studio 87 on Ko-fi" width="440"></a></p>
+
 <img src="assets/icon.svg" width="96" align="right" alt="icon">
 
 Free, open source MIDI controller plugin (VST3 and standalone) for the Lexicon MX400 hardware effects unit. It sends CC and program change from your DAW to the unit. It does not process audio, collects nothing and has no network code.
