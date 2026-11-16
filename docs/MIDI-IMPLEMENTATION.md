@@ -4,6 +4,8 @@ Status of every entry: **official only** (read from the manual, not yet verified
 
 Source: MX400 User Guide (Lexicon part 18-0446-A, 2006), pp. 33-34 (MIDI system menus), p. 45 (MIDI Implementation Chart) and pp. 46-49 (MIDI CC maps). The CC maps are images in the PDF; they were read by eye from rendered pages. Marked **(check)** where the print is ambiguous.
 
+Source tags: every entry below is "official: MX400 User Guide 18-0446-A" (page given per section) and **untested on hardware**. The CC maps are printed as images, so the numbers were read by eye; in the latest review pass the PDF could not be re-rendered, so they were not re-checked and stay as transcribed. Anything marked **(check)** is UNVERIFIED. Public copies of the guide: Thomann (images.thomann.de/pics/atg/atgdata/document/manual/195718.pdf) and manualslib.com/manual/382576/Lexicon-Mx400.html. The MX400 transmits no CC, so nothing can be read back from the unit.
+
 ## Basics (chart, p. 45)
 
 | Item | Value |
