@@ -195,6 +195,22 @@ int main()
         CHECK(diffBytes({ 0xF0, 1, 0xF7 }, { 0xF0, 1, 2, 0xF7 }).empty());
     }
 
+
+    // ---- port upkeep ----
+    CHECK(portAction(false, false, false) == PortAction::None);
+    CHECK(portAction(false, true, true) == PortAction::Close);
+    CHECK(portAction(true, true, true) == PortAction::None);
+    CHECK(portAction(true, true, false) == PortAction::Close);      // hot unplug
+    CHECK(portAction(true, false, true) == PortAction::Open);       // replug
+    CHECK(portAction(true, false, false) == PortAction::None);      // chosen device absent
+    {
+        const std::vector<std::string> ids { "a", "b", "c" }, names { "UM-ONE", "Other", "MX" };
+        CHECK(findPort(ids, names, "b", "") == 1);
+        CHECK(findPort(ids, names, "zz", "MX") == 2);               // id changed, name still matches
+        CHECK(findPort(ids, names, "zz", "gone") == -1);
+        CHECK(findPort(ids, names, "", "") == -1);
+    }
+
     std::printf("%d checks, %d failed\n", checks, fails);
     return fails ? 1 : 0;
 }

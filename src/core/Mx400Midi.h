@@ -240,4 +240,32 @@ inline std::vector<size_t> diffBytes(const Bytes& a, const Bytes& b)
         if (a[i] != b[i]) d.push_back(i);
     return d;
 }
+
+// ---- MIDI port upkeep (pure decision, no JUCE) ----
+// What to do with one port, given the device the user chose: nothing chosen, chosen and open,
+// chosen but unplugged, chosen and plugged in again.
+enum class PortAction { None, Open, Close };
+inline PortAction portAction(bool wanted, bool isOpen, bool presentNow)
+{
+    if (! wanted) return isOpen ? PortAction::Close : PortAction::None;
+    if (isOpen && ! presentNow) return PortAction::Close;     // unplugged: drop the handle
+    if (! isOpen && presentNow) return PortAction::Open;      // plugged in again: reopen
+    return PortAction::None;
+}
+
+// Index of the chosen device in a list of available ones: by id first, then by name (ids can
+// change after a replug on some systems). -1 when it is not there.
+inline int findPort(const std::vector<std::string>& ids, const std::vector<std::string>& names,
+                    const std::string& wantId, const std::string& wantName)
+{
+    if (! wantId.empty())
+        for (size_t i = 0; i < ids.size(); ++i) if (ids[i] == wantId) return (int) i;
+    if (! wantName.empty())
+        for (size_t i = 0; i < names.size(); ++i) if (names[i] == wantName) return (int) i;
+    return -1;
+}
+
+// Saved state: bump when a saved setting changes meaning. Older and newer states both load;
+// unknown properties are ignored and missing ones fall back to defaults.
+constexpr int kStateVersion = 1;
 }

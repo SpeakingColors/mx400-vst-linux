@@ -91,6 +91,7 @@ private:
     void emit (const mx400::MidiMsg&);
     void handleIncomingMidiMessage (juce::MidiInput*, const juce::MidiMessage&) override;
     void refreshAtomics();
+    void checkPorts();                             // sender thread: close unplugged ports, reopen replugged ones
     void snapshotValues();
     juce::String describe (const mx400::MidiMsg&) const;
 
@@ -105,6 +106,8 @@ private:
     std::atomic<bool> needResync { true }, needSendAll { false }, needPrograms { false }, suspendPolling { false };
     std::atomic<int> sent { 0 };
 
+    juce::CriticalSection portLock;                // guards midiIn/midiOut handles and the wanted device ids
+    juce::String wantOutId, wantOutName, wantInId, wantInName;
     juce::CriticalSection outLock;
     std::unique_ptr<juce::MidiOutput> midiOut;
     std::unique_ptr<juce::MidiInput> midiIn;

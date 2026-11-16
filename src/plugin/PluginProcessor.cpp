@@ -47,6 +47,7 @@ Mx400Processor::Mx400Processor()
 Mx400Processor::~Mx400Processor()
 {
     stopThread (2000);
+    const juce::ScopedLock pl (portLock);
     if (midiIn) midiIn->stop();
     midiIn.reset();
     const juce::ScopedLock sl (outLock);
@@ -109,11 +110,13 @@ void Mx400Processor::getStateInformation (juce::MemoryBlock& dest)
     for (size_t i = 0; i < touched.size(); ++i)
         if (touched[i].load()) ids.add (juce::String (mxp::table()[i].id));
     apvts.state.setProperty ("touched", ids.joinIntoString (","), nullptr);
+    apvts.state.setProperty ("stateVersion", kStateVersion, nullptr);
     if (auto xml = apvts.copyState().createXml()) copyXmlToBinary (*xml, dest);
 }
 
 void Mx400Processor::setStateInformation (const void* data, int size)
 {
+    if (data == nullptr || size <= 0) return;
     auto xml = getXmlFromBinary (data, size);
     if (xml == nullptr || ! xml->hasTagName (apvts.state.getType())) return;
     suspendPolling = true;                    // values that come from the saved project are not user moves
@@ -180,10 +183,12 @@ void Mx400Processor::resendPrograms() { needPrograms = true; }
 
 void Mx400Processor::run()
 {
+    int sincePortCheck = 0;
     while (! threadShouldExit())
     {
         serviceOnce();
         wait (2);
+        if ((sincePortCheck += 2) >= 1000) { sincePortCheck = 0; checkPorts(); }
     }
 }
 
@@ -283,6 +288,8 @@ void Mx400Processor::chooseOutput (const juce::String& id, const juce::String& n
     apvts.state.setProperty ("outName", name, nullptr);
     std::unique_ptr<juce::MidiOutput> opened;
     if (id.isNotEmpty()) opened = juce::MidiOutput::openDevice (id);
+    const juce::ScopedLock pl (portLock);
+    wantOutId = id; wantOutName = name;                  // kept even if the device is absent: it is reopened when it returns
     const juce::ScopedLock sl (outLock);
     midiOut = std::move (opened);
     outOpen = (midiOut != nullptr);
@@ -292,11 +299,53 @@ void Mx400Processor::chooseInput (const juce::String& id, const juce::String& na
 {
     apvts.state.setProperty ("inId", id, nullptr);
     apvts.state.setProperty ("inName", name, nullptr);
+    const juce::ScopedLock pl (portLock);
+    wantInId = id; wantInName = name;
     if (midiIn) { midiIn->stop(); midiIn.reset(); }
     inOpen = false;
     if (id.isEmpty()) return;
     midiIn = juce::MidiInput::openDevice (id, this);
     if (midiIn) { midiIn->start(); inOpen = true; }
+}
+
+// Runs about once a second on the sender thread. Unplugged ports are closed (so the UI shows
+// them closed); a chosen port that is present again is reopened. Nothing is sent on reopen.
+void Mx400Processor::checkPorts()
+{
+    const auto outs = juce::MidiOutput::getAvailableDevices();
+    const auto ins = juce::MidiInput::getAvailableDevices();
+    std::vector<std::string> oi, on, ii, in;
+    for (auto& d : outs) { oi.push_back (d.identifier.toStdString()); on.push_back (d.name.toStdString()); }
+    for (auto& d : ins)  { ii.push_back (d.identifier.toStdString()); in.push_back (d.name.toStdString()); }
+
+    const juce::ScopedLock pl (portLock);
+    {
+        const int k = findPort (oi, on, wantOutId.toStdString(), wantOutName.toStdString());
+        switch (portAction (wantOutId.isNotEmpty(), outOpen.load(), k >= 0))
+        {
+            case PortAction::Close: { const juce::ScopedLock sl (outLock); midiOut.reset(); outOpen = false; } break;
+            case PortAction::Open:
+            {
+                auto opened = juce::MidiOutput::openDevice (outs[k].identifier);
+                const juce::ScopedLock sl (outLock);
+                midiOut = std::move (opened);
+                outOpen = (midiOut != nullptr);
+            } break;
+            case PortAction::None: break;
+        }
+    }
+    {
+        const int k = findPort (ii, in, wantInId.toStdString(), wantInName.toStdString());
+        switch (portAction (wantInId.isNotEmpty(), inOpen.load(), k >= 0))
+        {
+            case PortAction::Close: if (midiIn) { midiIn->stop(); midiIn.reset(); } inOpen = false; break;
+            case PortAction::Open:
+                midiIn = juce::MidiInput::openDevice (ins[k].identifier, this);
+                if (midiIn) { midiIn->start(); inOpen = true; }
+                break;
+            case PortAction::None: break;
+        }
+    }
 }
 
 // ---- SysEx capture ------------------------------------------------------------------------

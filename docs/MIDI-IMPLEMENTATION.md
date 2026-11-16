@@ -1,6 +1,11 @@
 # Lexicon MX400: MIDI implementation
 
-Status of every entry: **official only** (read from the manual, not yet verified on hardware).
+Status legend used in this file:
+- **documented**: printed in the manual named below. Nothing in this file is "captured" yet: the repo holds no capture from an owner's device.
+- **untested**: every row. No entry has been tried on a real MX400. Rows marked **(check)** are also ambiguous in the print.
+- Lexicon publishes no SysEx format and no value lists for effect types or routing. Those are left raw (0 to 127) and nothing is invented for them.
+
+This file could not be re-checked against the PDF in the last editing session (no network access to the maker's site); it still reflects the earlier reading of the manual.
 
 Source: MX400 User Guide (Lexicon part 18-0446-A, 2006), pp. 33-34 (MIDI system menus), p. 45 (MIDI Implementation Chart) and pp. 46-49 (MIDI CC maps). The CC maps are images in the PDF; they were read by eye from rendered pages. Marked **(check)** where the print is ambiguous.
 
@@ -145,3 +150,11 @@ Tremolo/Panner, Vibrato, DeEsser: none on this page.
 3. SysEx format for MX-Edit is not documented. The plugin never builds or sends MX400 SysEx; it only captures and stores dumps. See [CAPTURE-GUIDE.md](CAPTURE-GUIDE.md).
 4. Quiet time after a program change and the safe message rate are guesses (the plugin uses 120 ms and 5 ms by default); verify on hardware.
 5. Which CC the unit really uses on the printed overlap (26 to 28 in the Dual Stereo map) is unknown until tested.
+
+## Plugin behaviour (technical)
+
+- Ports: the chosen output and input are remembered by id and name in the project. If the device is unplugged the port is closed; when it is plugged in again the plugin reopens it, about once a second (matched by id, then by name). Nothing is sent on reopen.
+- The input port is used only to capture SysEx; nothing received is forwarded, so there is no MIDI feedback loop.
+- Channels: A and B are stored as 1 to 16 and clamped when a project loads. Program B and channel B are used only in Dual Stereo.
+- Parameters: host-automatable parameters keep their ids; ids are not renamed.
+- Saved state: carries a `stateVersion` (currently 1). Empty, corrupt or foreign data is ignored; unknown properties are ignored and missing ones use defaults.
