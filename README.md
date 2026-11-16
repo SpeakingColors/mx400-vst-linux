@@ -4,7 +4,7 @@
 
 <img src="assets/icon.svg" width="96" align="right" alt="icon">
 
-Free, open source MIDI controller plugin (VST3 and standalone) for the Lexicon MX400 hardware effects unit. It sends CC and program change from your DAW to the unit. It does not process audio, collects nothing and has no network code.
+Free, open source MIDI controller plugin (VST3 and standalone) for the Lexicon MX400 hardware effects unit. It sends CC and program change from your DAW to the unit. It does not process audio.
 
 <p align="center"><img src="docs/screenshot.png" width="760" alt="MX400 Controller"></p>
 
