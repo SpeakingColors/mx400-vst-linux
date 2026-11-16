@@ -1,8 +1,8 @@
-MX400 Controller install, remove and use (works fully offline)
-==============================================================
+MX400 Controller install, remove and use
+========================================
 
 What it is: a MIDI controller plugin for the Lexicon MX400 hardware unit. It sends MIDI (CC, program change)
-to the MX400. It does not process audio and it collects nothing. Not affiliated with the maker of the MX400.
+to the MX400. It does not process audio. Not affiliated with the maker of the MX400.
 
 Windows
   Run windows\MX400Controller-Setup.exe. It installs two things: the VST3 plugin for your DAW

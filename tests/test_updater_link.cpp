@@ -17,9 +17,9 @@ int main()
     CHECK (studio87link::updaterUrl (product) == "studio87://open?product=mx400-vst-linux", "link is studio87://open?product=<repo name>");
     CHECK (studio87link::updaterUrl ("") == "studio87://open", "no product gives the plain open link");
     CHECK (studio87link::updaterUrl (product).find ("://") == 8, "scheme is studio87");
-    CHECK (studio87link::updaterUrl (product).find ("http") == std::string::npos, "link is not a web address (no network call)");
+    CHECK (studio87link::updaterUrl (product).find ("http") == std::string::npos, "link is not a web address");
     CHECK (std::string (studio87link::fallbackMessage()) == "Install Studio 87 Gear Updater from github.com/SpeakingColors/gearupdater/releases", "fallback message is the contract text");
-    CHECK (std::string (studio87link::tipText()).find ("Nothing is sent anywhere.") != std::string::npos, "hover bubble says nothing is sent");
+    CHECK (std::string (studio87link::tipText()).find ("Gear Updater") != std::string::npos, "hover bubble names the updater");
     CHECK (std::strstr (studio87link::tipText(), "\xE2\x80\x94") == nullptr, "no em dash in the bubble");
     return fails == 0 ? 0 : 1;
 }

@@ -1,5 +1,5 @@
 ; Windows installer + uninstaller (Inno Setup). Called as: ISCC /DName=MX400Controller "/DProduct=MX400 Controller" /DData=MX400 /DVersion=0.1.0 packaging/windows.iss
-; Files are staged in ..\stage by the release workflow. Works offline.
+; Files are staged in ..\stage by the release workflow.
 ; The uninstaller removes everything it installed. Your saved data (%APPDATA%\Studio 87\MX400) is kept
 ; unless you answer Yes when it asks. A silent uninstall (/SILENT, /VERYSILENT) always keeps them.
 [Setup]

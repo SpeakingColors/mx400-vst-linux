@@ -10,4 +10,3 @@ What you will see:
 ## How to check a download yourself
 - The full source code is public and the installers are built by public GitHub Actions from it.
 - Every release has `SHA256SUMS` inside the zip. Check your files against it (`sha256sum -c SHA256SUMS` on Linux, `shasum -a 256 -c SHA256SUMS` on macOS).
-- The plugin makes no network connections and collects nothing.

@@ -1,5 +1,5 @@
 # Intro
-MX400 Controller is a free, open source plugin that sends MIDI to a Lexicon MX400 hardware effects unit, so you can control the unit from inside your DAW or as a standalone app. It does not process audio: your sound goes through the hardware, the plugin only sends control messages. It collects nothing and has no network code.
+MX400 Controller is a free, open source plugin that sends MIDI to a Lexicon MX400 hardware effects unit, so you can control the unit from inside your DAW or as a standalone app. It does not process audio: your sound goes through the hardware, the plugin only sends control messages.
 Not affiliated with or endorsed by the maker of the MX400. The name is used for compatibility only.
 Version 0.1 is an early build. Everything marked "official only" comes from the printed MX400 manual and has not been tested on a real unit yet.
 

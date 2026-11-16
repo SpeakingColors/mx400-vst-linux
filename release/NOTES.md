@@ -2,7 +2,7 @@
 
 Changes in v0.1.2: new blue icon; fixed the Windows installer, which could install an empty plugin folder (the plugin did not show up in the DAW). v0.1.1 and v0.1.0 are not usable on Windows.
 
-A free, open source MIDI controller plugin for the Lexicon MX400 hardware unit. It sends CC and program change; it does not process audio. It collects nothing and works offline.
+A free, open source MIDI controller plugin for the Lexicon MX400 hardware unit. It sends CC and program change; it does not process audio.
 
 One zip: installers for Windows (.exe), macOS (.pkg), Linux (Flatpak extension and a plain .vst3), the PDF manual, INSTALL.txt and SHA-256 sums.
 

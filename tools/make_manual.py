@@ -21,7 +21,7 @@ def esc(t):
     return re.sub(r"`(.+?)`", r"<font face='Courier'>\1</font>", t)
 
 story = [Paragraph("MX400 Controller", ParagraphStyle("t", fontName="Helvetica-Bold", fontSize=26, leading=32, spaceAfter=4)),
-         Paragraph("Studio 87. Free and open source (AGPL-3.0-or-later). Collects nothing.", P), Spacer(1, 6)]
+         Paragraph("Studio 87. Free and open source (AGPL-3.0-or-later).", P), Spacer(1, 6)]
 
 sec = None
 for line in open(os.path.join(root, "docs/manual.txt"), encoding="utf-8").read().splitlines():

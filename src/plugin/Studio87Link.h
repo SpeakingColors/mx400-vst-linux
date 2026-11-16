@@ -1,6 +1,5 @@
 // Studio87Link.h: the link a plugin's About page opens to start Studio 87 Gear Updater.
-// Contract: github.com/SpeakingColors/gearupdater, docs/plugin-link.md. The plugin makes no network call and sends
-// nothing: it only asks the operating system to open studio87://open?product=<repo name>. Pure C++ (no JUCE) so the
+// Contract: github.com/SpeakingColors/gearupdater, docs/plugin-link.md. The plugin only asks the operating system to open studio87://open?product=<repo name>. Pure C++ (no JUCE) so the
 // product id and the link can be unit tested.
 #pragma once
 #include <string>
@@ -23,13 +22,13 @@ inline const char* fallbackMessage()
 // For About boxes that cannot show a hover bubble (native message boxes): the same facts as one sentence.
 inline const char* aboutLine()
 {
-    return "Open Studio 87 Gear Updater checks this plugin for updates. Nothing is sent anywhere. "
+    return "Open Studio 87 Gear Updater checks this plugin for updates. "
            "If nothing opens, install Studio 87 Gear Updater from github.com/SpeakingColors/gearupdater/releases.";
 }
 
 inline const char* tipText()
 {
-    return "Opens Studio 87 Gear Updater to check this plugin for updates. Nothing is sent anywhere. "
+    return "Opens Studio 87 Gear Updater to check this plugin for updates. "
            "If nothing opens, install Studio 87 Gear Updater from github.com/SpeakingColors/gearupdater/releases.";
 }
 } // namespace studio87link
@@ -39,7 +38,6 @@ inline const char* tipText()
 namespace studio87link
 {
 // The About button: asks the OS to open the link. If nothing could open it, shows the fallback message.
-// No network call is made by the plugin.
 inline bool openUpdater (const char* product)
 {
     const bool opened = juce::URL (juce::String (updaterUrl (product))).launchInDefaultBrowser();

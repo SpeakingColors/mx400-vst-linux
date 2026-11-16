@@ -652,7 +652,7 @@ public:
         btn (progB, "Send programs again", "Sends bank select and program change for program A (and B in Dual Stereo).");
         btn (srcB, "Source code", "Opens the GitHub page in your browser. This is also where you check for new versions: the plugin never connects to the internet by itself.");
         btn (donB, "Support on Ko-fi", "Opens ko-fi.com/studio87 in your browser. The plugin is free; this is optional.");
-        btn (updB, studio87link::buttonText(), studio87link::tipText());   // opens studio87://open?product=mx400-vst-linux, no network call by the plugin
+        btn (updB, studio87link::buttonText(), studio87link::tipText());   // opens studio87://open?product=mx400-vst-linux
         btn (dbgB, "Export debug info", "Writes a text file with your settings and the last messages sent. Nothing leaves your computer.");
         btn (resetB, "Reset window to 100%", "Back to the default size. Double clicking a wood side does the same.");
         refreshB.onClick = [this] { fillPorts(); };
@@ -732,7 +732,7 @@ public:
         const char* labels[] = { "Output to MX400", "Input from MX400", "Output route", "MIDI channel A", "MIDI channel B", "Send rate" };
         for (int i = 0; i < 6; ++i) g.drawText (labels[i], midiBox.getX() + 16, midiBox.getY() + 8 + 32 + i * 34, 210, 34, Justification::centredLeft);
         g.setColour (C::text()); g.setFont (FontOptions (13.0f));
-        g.drawFittedText ("MX400 Controller " + String (JucePlugin_VersionString) + ", part of the Studio 87 cat plugins. Free and open source (AGPL-3.0-or-later). It collects nothing, has no network code and never checks for updates by itself.\n"
+        g.drawFittedText ("MX400 Controller " + String (JucePlugin_VersionString) + ", part of the Studio 87 cat plugins. Free and open source (AGPL-3.0-or-later).\n"
                           "Not affiliated with or endorsed by the maker of the MX400. The device name is used for compatibility only. No manufacturer logos or files are included.",
                           Rectangle<int> (aboutBox.getX() + 16, aboutBox.getY() + 40, aboutBox.getWidth() - 32, 56), Justification::topLeft, 4);
     }
