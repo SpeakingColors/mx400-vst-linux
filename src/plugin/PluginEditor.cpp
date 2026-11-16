@@ -1,4 +1,5 @@
 #include "PluginEditor.h"
+#include "Studio87Link.h"
 #include <catui/Logo.h>
 #include <catui/SodaPop.h>
 #include <cmath>
@@ -651,6 +652,7 @@ public:
         btn (progB, "Send programs again", "Sends bank select and program change for program A (and B in Dual Stereo).");
         btn (srcB, "Source code", "Opens the GitHub page in your browser. This is also where you check for new versions: the plugin never connects to the internet by itself.");
         btn (donB, "Support on Ko-fi", "Opens ko-fi.com/studio87 in your browser. The plugin is free; this is optional.");
+        btn (updB, studio87link::buttonText(), studio87link::tipText());   // opens studio87://open?product=mx400-vst-linux, no network call by the plugin
         btn (dbgB, "Export debug info", "Writes a text file with your settings and the last messages sent. Nothing leaves your computer.");
         btn (resetB, "Reset window to 100%", "Back to the default size. Double clicking a wood side does the same.");
         refreshB.onClick = [this] { fillPorts(); };
@@ -659,6 +661,7 @@ public:
         progB.onClick = [this] { proc.resendPrograms(); };
         srcB.onClick = [] { URL ("https://github.com/SpeakingColors/mx400-vst-linux").launchInDefaultBrowser(); };
         donB.onClick = [] { URL ("https://ko-fi.com/studio87").launchInDefaultBrowser(); };
+        updB.onClick = [this] { studio87link::openUpdater ("mx400-vst-linux"); };
         resetB.onClick = std::move (reset100);
         dbgB.onClick = [this]
         {
@@ -720,7 +723,7 @@ public:
         aboutBox = bottom.removeFromTop (190);
         auto b = aboutBox.reduced (16, 8); b.removeFromTop (30 + 56);
         auto bb = b.removeFromTop (34);
-        srcB.setBounds (bb.removeFromLeft (130)); bb.removeFromLeft (8); donB.setBounds (bb.removeFromLeft (150)); bb.removeFromLeft (8); dbgB.setBounds (bb.removeFromLeft (170)); bb.removeFromLeft (8); resetB.setBounds (bb.removeFromLeft (190));
+        srcB.setBounds (bb.removeFromLeft (130)); bb.removeFromLeft (8); donB.setBounds (bb.removeFromLeft (150)); bb.removeFromLeft (8); updB.setBounds (bb.removeFromLeft (230)); bb.removeFromLeft (8); dbgB.setBounds (bb.removeFromLeft (170)); bb.removeFromLeft (8); resetB.setBounds (bb.removeFromLeft (190));
     }
     void paint (Graphics& g) override
     {
@@ -737,7 +740,7 @@ private:
     Mx400Processor& proc; std::function<void()> onChanged;
     ComboBox outBox, inBox, routeBox, chABox, chBBox, rateBox;
     ToggleButton recallT, manualT, thruT, hintsT;
-    TextButton refreshB, sendAllB, forgetB, progB, srcB, donB, dbgB, resetB;
+    TextButton refreshB, sendAllB, forgetB, progB, srcB, donB, updB, dbgB, resetB;
     TextEditor monitor; String lastText;
     Rectangle<int> midiBox, actBox, aboutBox;
 };
