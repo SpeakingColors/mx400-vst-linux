@@ -24,7 +24,7 @@ if(MX400_BUILD_PLUGIN)
     FetchContent_MakeAvailable(juce)
   endif()
   include(FetchContent)
-  FetchContent_Declare(cat_ui GIT_REPOSITORY https://github.com/SpeakingColors/cat-ui GIT_TAG c247023b9e61e1eda3de6f1da8170f08c4376501 GIT_SHALLOW ON)
+  FetchContent_Declare(cat_ui GIT_REPOSITORY https://github.com/SpeakingColors/cat-ui GIT_TAG c247023b9e61e1eda3de6f1da8170f08c4376501)
   FetchContent_MakeAvailable(cat_ui)
 
   juce_add_plugin(MX400Controller
